@@ -45,3 +45,4 @@ def clip_all(folder):
 if __name__ == '__main__':
     clip_all('train')  # or 'train' depending on your use case
     clip_all('val')  
+    clip_all('test')

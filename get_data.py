@@ -13,14 +13,14 @@ gc.enable()
 
 def func(doc):
     # Print the current document ID
-    print(f"Processing document {doc}", end=' ')
+    # print(f"Processing document {doc}", end=' ')
 
     # Retrieve data from the 'train' directory
     (img_id, reaL_prompt, fake_prompt, img_url,
      image_gen0_meta, image_gen1_meta, image_gen2_meta, image_gen3_meta) = \
         utils.get_data(f'train/{doc:d}.parquet') #Use test/{doc:d} for loading test dataset
 
-    print(f"Data retrieved for document {doc}")
+    # print(f"Data retrieved for document {doc}")
 
     # Create a list of tuples with the required data
     pack = [(img_id[i],
@@ -35,7 +35,7 @@ def func(doc):
         result = utils.get_data(i)
         if result: results.append(result)
 
-    print(f"Processed data for document {doc}")
+    # print(f"Processed data for document {doc}")
 
     # Unpack the results into separate lists
     img_id, original_prompt, positive_prompt, real, image_gen0, image_gen1, image_gen2, image_gen3 = zip(*results)
@@ -84,6 +84,8 @@ if __name__ == '__main__':
     # Use multiprocessing to process documents in parallel
     with Pool(cpu_workers) as pool:
         pool.map(func, train_docs)
+
+    print("Processing complete.")
 
 
 

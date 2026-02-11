@@ -81,7 +81,7 @@ target/
 # IPython
 profile_default/
 ipython_config.py
-
+models/
 # pyenv
 #   For a library or package, you might want to ignore these files since the code is
 #   intended to run in multiple environments; otherwise, check them in:
@@ -158,3 +158,31 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
+# Training/validation data (too large)
+h5_test/
+h5_train/
+h5_val/
+test/
+train/
+val/
+clip_test/
+clip_train/
+clip_val/
+
+# Checkpoints - KEEP ONLY THE ONES YOU NEED FOR DEPLOYMENT
+# Comment out the specific checkpoints you want to deploy
+gelu_af_checkpoints_auc_gamma_0.5_approx/
+gelu_af_checkpoints_auc_gamma_0.5_new/
+gelu_af_checkpoints_auc_gamma_0.8_approx/
+gelu_checkpoints_auc_gamma_0.5_new/
+relu_af_checkpoints_auc_gamma_0.5_approx/
+relu_af_checkpoints_auc_gamma_0.5_new/
+relu_af_checkpoints_auc_gamma_0.8_approx/
+relu_checkpoints_auc_gamma_0.5_new/
+
+SAM_utils/
+scipts/
+test/
+train/
+val/
+models/

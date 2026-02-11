@@ -13,20 +13,23 @@ class DFADModel(nn.Module):
             nn.Linear(1536, 1536),
             nn.BatchNorm1d(1536),
             # nn.ReLU(),
-            nn.LeakyReLU(negative_slope=leaky_relu_slope),
+            nn.GELU(),
+            # nn.LeakyReLU(negative_slope=leaky_relu_slope),
             # nn.Sigmoid(),
             nn.Dropout(p=dropout_rate),
 
             nn.Linear(1536, 1536),
             nn.BatchNorm1d(1536),
             # nn.ReLU(),
-            nn.LeakyReLU(negative_slope=leaky_relu_slope),
+            nn.GELU(),
+            # nn.LeakyReLU(negative_slope=leaky_relu_slope),
             nn.Dropout(p=dropout_rate),
 
             nn.Linear(1536, 1536),
             nn.BatchNorm1d(1536),
             # nn.ReLU(),
-            nn.LeakyReLU(negative_slope=leaky_relu_slope),
+            nn.GELU(),
+            # nn.LeakyReLU(negative_slope=leaky_relu_slope),
             nn.Dropout(p=dropout_rate),
 
         )
@@ -35,10 +38,22 @@ class DFADModel(nn.Module):
         self.output_layer = nn.Linear(1536, 1)
 
         #he initialization
+        # FOR RELU/LEAKY RELU
+        # for layer in self.layers:
+        #     if isinstance(layer, nn.Linear):
+        #         nn.init.kaiming_uniform_(layer.weight, mode='fan_in', nonlinearity='relu')
+        # nn.init.kaiming_uniform_(self.output_layer.weight, mode='fan_in', nonlinearity='relu')
+
+        # FOR GELU
         for layer in self.layers:
             if isinstance(layer, nn.Linear):
-                nn.init.kaiming_uniform_(layer.weight, mode='fan_in', nonlinearity='relu')
-        nn.init.kaiming_uniform_(self.output_layer.weight, mode='fan_in', nonlinearity='relu')
+                nn.init.xavier_uniform_(layer.weight)
+                if layer.bias is not None:
+                    nn.init.zeros_(layer.bias)
+        
+        nn.init.xavier_uniform_(self.output_layer.weight)
+        if self.output_layer.bias is not None:
+            nn.init.zeros_(self.output_layer.bias)
 
 
     def forward(self, inputs, text_inputs):

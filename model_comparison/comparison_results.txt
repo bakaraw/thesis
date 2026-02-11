@@ -1,0 +1,49 @@
+MODEL COMPARISON RESULTS
+================================================================================
+
+RELU: relu_checkpoints_from_images_with_blip/checkpoint_epoch_0049.pt
+GELU: gelu_checkpoints_from_images_with_blip/checkpoint_epoch_0049.pt
+
+Metric                          RELU            GELU      Difference
+----------------------------------------------------------------------
+accuracy                    0.771458        0.993906      +0.222448 <M2
+precision                   0.807829        0.994829      +0.187000 <M2
+recall                      0.702786        0.992776      +0.289990 <M2
+f1_score                    0.751656        0.993802      +0.242146 <M2
+auc                         0.861115        0.999378      +0.138263 <M2
+specificity                 0.838000        0.995000      +0.157000 <M2
+
+================================================================================
+
+
+RELU - Detailed Results:
+--------------------------------------------------------------------------------
+  Accuracy:     0.771458
+  Precision:    0.807829
+  Recall:       0.702786
+  F1-Score:     0.751656
+  AUC-ROC:      0.861115
+  Specificity:  0.838000
+
+  Confusion Matrix:
+                Predicted
+              Real    Fake
+  Actual Real   838     162
+  Actual Fake   288     681
+
+
+GELU - Detailed Results:
+--------------------------------------------------------------------------------
+  Accuracy:     0.993906
+  Precision:    0.994829
+  Recall:       0.992776
+  F1-Score:     0.993802
+  AUC-ROC:      0.999378
+  Specificity:  0.995000
+
+  Confusion Matrix:
+                Predicted
+              Real    Fake
+  Actual Real   995       5
+  Actual Fake     7     962
+

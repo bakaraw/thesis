@@ -13,7 +13,7 @@ import numpy as np
 from sklearn.metrics import roc_auc_score
 from scipy import optimize
 from dataset import DFADDataset
-from models.DFAD_model_base import DFADModel
+from DFAD_model_base import DFADModel
 from tqdm import tqdm
 
 import os
@@ -128,16 +128,17 @@ def evaluate(model, criterion, val_loader):
     auc_score = roc_auc_score(all_labels, all_predictions)
     return accuracy, auc_score
 
-def model_trainer(loss_type, alpha, batch_size=64, num_epochs=32):
+def model_trainer(loss_type, gamma, batch_size=64, num_epochs=32):  # Changed alpha to gamma
     # Move model to GPU
-    print(alpha)
+    print(gamma)  # Changed alpha to gamma
     model = DFADModel()
-    model = nn.DataParallel(model, device_ids=[0,1,2,3,4,5,6,7]).cuda()
+    model = nn.DataParallel(model, device_ids=[0]).cuda()
     train_dataset = DFADDataset('train')
     val_dataset = DFADDataset('val')
 
-    train_loader = DataLoader(train_dataset, batch_size=batch_size,num_workers=32, shuffle=True)
-    val_loader = DataLoader(val_dataset, batch_size=batch_size,num_workers=32,shuffle=False)
+    #prev 32 num_workers
+    train_loader = DataLoader(train_dataset, batch_size=batch_size,num_workers=8, shuffle=True)
+    val_loader = DataLoader(val_dataset, batch_size=batch_size,num_workers=8,shuffle=False)
 
 
     # Prepare data loaders
@@ -152,35 +153,31 @@ def model_trainer(loss_type, alpha, batch_size=64, num_epochs=32):
     optimizer = SAM(model.parameters(), torch.optim.AdamW, lr=1e-3, betas=(0.9, 0.999), weight_decay=0.01)
     # Initialize the learning rate scheduler
     scheduler = CosineAnnealingLR(optimizer.base_optimizer, T_max=num_epochs / 4, eta_min=1e-5)  # eta_min is the minimum lr
-    checkpoint_dir = f'checkpoints_{loss_type}_alpha_{alpha}_new'
+    checkpoint_dir = f'checkpoints_{loss_type}_gamma_{gamma}_new'  # Changed alpha to gamma
     os.makedirs(checkpoint_dir, exist_ok=True)
     metrics_file_path = os.path.join(checkpoint_dir, 'performance_metrics.txt')
     with open(metrics_file_path, 'w') as f:
         f.write('Epoch,Train Loss,Validation Accuracy,Validation AUC\n')
 
 
-    # trian and evaluate
+    # train and evaluate
     for epoch in range(num_epochs):
         print(str(epoch).zfill(4))
-        train_loss = train_epoch(model, optimizer, scheduler, criterion,train_loader,loss_type, alpha)
+        train_loss = train_epoch(model, optimizer, scheduler, criterion, train_loader, loss_type, gamma)  # Pass gamma
 
-        # val_loss, accuracy, auc= evaluate(model, criterion, val_loader)
-        accuracy, auc= evaluate(model, criterion, val_loader)
+        accuracy, auc = evaluate(model, criterion, val_loader)
 
-
-        # print(f'Validation Loss: {val_loss:.6f}')
         print(f'train loss: {train_loss:.6f}')
         print(f'Validation Acc: {accuracy:.6f}')
         print(f'Validation AUC: {auc:.6f}')
         print()
-        # print(f'Train Loss: {train_loss:.6f}, Validation Accuracy: {accuracy:.6f}, Validation AUC: {auc:.6f}')
+        
         with open(metrics_file_path, 'a') as f:
             f.write(f'{epoch},{train_loss},{accuracy},{auc}\n')
 
         # Saving model checkpoint
         checkpoint_path = os.path.join(checkpoint_dir, f'checkpoint_epoch_{epoch:04d}.pt')
         torch.save(model.state_dict(), checkpoint_path)
-
 
 if __name__ == '__main__':
 
