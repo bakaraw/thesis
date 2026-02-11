@@ -1,23 +1,3 @@
-Sample Generated Captions:
-============================================================
-
-00001.png: arafed chimpan sitting on the ground in the jungle
-00002.png: there is a rabbit that is sitting in the grass
-00003.png: araffe sitting in the jungle with a very large chest
-00004.png: octopus in the water with its tentacles spread out
-00005.png: there are many blue whales in the ocean with corals
-00006.jpg: several people standing around a table with boxes and boxes on it
-00007.jpg: there are two people standing next to each other in a park
-00008.jpg: there is a person standing on a skateboard in the street
-00009.jpg: there is a building with a sign that says stone square
-00010.jpg: several children are sitting in the grass at night with a flashlight
-00011.jpg: there are many white flowers in the garden with a sign
-00012.jpg: there is a motorcycle with a large round mirror on the back
-00013.jpg: there are many signs on the side of a building that say diesel
-00014.jpg: there is a train that is traveling down the tracks with a face on it
-00015.jpg: there are many flags hanging from the side of a building
-00015.png: there is a man standing on a mountain with a backpack
-00016.png: arafed view of a river running through a snow covered field
-00017.png: there are many sunflowers that are growing in the field
-00018.png: arafed view of a field with wind turbines in the distance
-00019.png: arafed view of a river flowing through a canyon with a dark sky
+version https://git-lfs.github.com/spec/v1
+oid sha256:4f96aeb26f09fece3552aea3e6a88b57baeb78af84b66534cbd273ddebafec2b
+size 1488
